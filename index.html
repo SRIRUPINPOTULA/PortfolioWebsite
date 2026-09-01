@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sri Rupin Potula — Software Engineer</title>
+<meta name="description" content="Sri Rupin Potula — Software Engineer building AI agents and backend systems. MS CS, Arizona State University.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d1117'/%3E%3Cpath d='M18 22 L30 32 L18 42' fill='none' stroke='%234ec9b0' stroke-width='5' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='34' y1='43' x2='48' y2='43' stroke='%234ec9b0' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0d1117;
+  --bg-raised:#151b23;
+  --bg-inset:#0a0e14;
+  --line:#232b36;
+  --line-bright:#303d4d;
+  --text:#e6edf3;
+  --text-dim:#9aa7b4;
+  --text-faint:#5f6b78;
+  --accent:#4ec9b0;      /* teal — terminal/systems */
+  --accent-warm:#e2b341; /* amber — for run/exec states */
+  --accent-dim:#2d6b5f;
+  --radius:10px;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --display:'Space Grotesk',sans-serif;
+  --body:'Inter',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:var(--body);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent-dim);color:#fff}
+
+/* subtle grid texture */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;
+  opacity:.15;
+  mask-image:radial-gradient(ellipse 80% 60% at 50% 0%,#000 20%,transparent 75%);
+}
+
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+
+/* ---------- NAV ---------- */
+nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(13,17,23,.82);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{max-width:1080px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:var(--mono);font-weight:600;font-size:15px;letter-spacing:-.02em;display:flex;align-items:center;gap:9px}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent)}
+.nav-links{display:flex;gap:28px;font-size:14px;font-family:var(--mono)}
+.nav-links a{color:var(--text-dim);transition:color .15s}
+.nav-links a:hover{color:var(--accent)}
+.nav-toggle{display:none;background:none;border:1px solid var(--line-bright);color:var(--text);border-radius:8px;padding:6px 10px;font-family:var(--mono);cursor:pointer}
+
+/* ---------- HERO ---------- */
+.hero{padding:88px 0 72px;display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.hero-eyebrow{font-family:var(--mono);color:var(--accent);font-size:13px;margin-bottom:22px;display:flex;align-items:center;gap:8px}
+.hero-eyebrow .blink{width:8px;height:15px;background:var(--accent);animation:blink 1.1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+h1{font-family:var(--display);font-size:clamp(2.6rem,6vw,4.1rem);font-weight:700;line-height:1.02;letter-spacing:-.03em;margin-bottom:20px}
+.hero-role{font-family:var(--mono);font-size:clamp(.95rem,2vw,1.15rem);color:var(--text-dim);margin-bottom:26px}
+.hero-role .sep{color:var(--accent);margin:0 8px}
+.hero-blurb{color:var(--text-dim);max-width:46ch;margin-bottom:32px;font-size:1.02rem}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.btn{font-family:var(--mono);font-size:14px;padding:11px 20px;border-radius:8px;transition:all .16s;cursor:pointer;border:1px solid transparent;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--accent);color:#06231d;font-weight:600}
+.btn-primary:hover{background:#5fd9c1;transform:translateY(-1px)}
+.btn-ghost{border-color:var(--line-bright);color:var(--text)}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+.hero-social{display:flex;gap:8px;margin-left:6px}
+.hero-social a{width:38px;height:38px;border:1px solid var(--line-bright);border-radius:8px;display:flex;align-items:center;justify-content:center;color:var(--text-dim);transition:all .16s}
+.hero-social a:hover{color:var(--accent);border-color:var(--accent);transform:translateY(-1px)}
+.hero-social svg{width:17px;height:17px}
+
+/* ---------- SIGNATURE: agent trace terminal ---------- */
+.trace{
+  background:var(--bg-inset);
+  border:1px solid var(--line-bright);
+  border-radius:var(--radius);
+  overflow:hidden;
+  box-shadow:0 24px 60px -30px rgba(0,0,0,.9);
+  font-family:var(--mono);
+  font-size:12.5px;
+}
+.trace-bar{display:flex;align-items:center;gap:7px;padding:11px 14px;border-bottom:1px solid var(--line);background:var(--bg-raised)}
+.trace-bar .d{width:11px;height:11px;border-radius:50%}
+.trace-bar .d1{background:#ff5f56}.trace-bar .d2{background:#ffbd2e}.trace-bar .d3{background:#27c93f}
+.trace-title{margin-left:8px;color:var(--text-faint);font-size:11.5px}
+.trace-body{padding:16px;min-height:290px;line-height:1.9}
+.tl{opacity:0;transform:translateY(4px);animation:tlin .3s forwards}
+@keyframes tlin{to{opacity:1;transform:none}}
+.c-prompt{color:var(--accent)}
+.c-dim{color:var(--text-faint)}
+.c-key{color:var(--accent-warm)}
+.c-str{color:#7fb8e6}
+.c-ok{color:#5fd9c1}
+.c-tool{color:#c39bf0}
+.cursor{display:inline-block;width:7px;height:14px;background:var(--accent);vertical-align:middle;animation:blink 1.1s step-end infinite}
+
+/* ---------- SECTIONS ---------- */
+section{padding:72px 0;position:relative}
+.sec-head{margin-bottom:44px}
+.sec-tag{font-family:var(--mono);color:var(--accent);font-size:13px;margin-bottom:10px}
+.sec-title{font-family:var(--display);font-size:clamp(1.8rem,4vw,2.5rem);font-weight:600;letter-spacing:-.02em}
+.divider{height:1px;background:var(--line);border:0}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;align-items:start}
+.about-text p{color:var(--text-dim);margin-bottom:16px;max-width:60ch}
+.about-text strong{color:var(--text);font-weight:600}
+.about-cards{display:flex;flex-direction:column;gap:14px}
+.info-card{background:var(--bg-raised);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px}
+.info-card .lbl{font-family:var(--mono);font-size:11.5px;color:var(--accent);margin-bottom:8px}
+.info-card .main{font-family:var(--display);font-weight:600;font-size:1.05rem;margin-bottom:3px}
+.info-card .sub{color:var(--text-dim);font-size:.9rem}
+.info-card .meta{color:var(--text-faint);font-size:.82rem;font-family:var(--mono);margin-top:4px}
+
+/* EXPERIENCE timeline */
+.timeline{position:relative;padding-left:28px}
+.timeline::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--line-bright)}
+.job{position:relative;padding-bottom:34px}
+.job:last-child{padding-bottom:0}
+.job::before{content:"";position:absolute;left:-26px;top:6px;width:11px;height:11px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.job-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;align-items:baseline;margin-bottom:6px}
+.job-role{font-family:var(--display);font-weight:600;font-size:1.12rem}
+.job-co{color:var(--accent);font-weight:500}
+.job-date{font-family:var(--mono);font-size:12.5px;color:var(--text-faint)}
+.job ul{list-style:none;margin-top:8px}
+.job li{color:var(--text-dim);font-size:.95rem;padding-left:18px;position:relative;margin-bottom:5px;max-width:66ch}
+.job li::before{content:"›";position:absolute;left:0;color:var(--accent);font-family:var(--mono)}
+
+/* PROJECTS */
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.proj{background:var(--bg-raised);border:1px solid var(--line);border-radius:var(--radius);padding:24px;transition:border-color .18s,transform .18s;display:flex;flex-direction:column}
+.proj:hover{border-color:var(--line-bright);transform:translateY(-2px)}
+.proj-icon{font-family:var(--mono);color:var(--accent);font-size:13px;margin-bottom:14px}
+.proj h3{font-family:var(--display);font-size:1.2rem;font-weight:600;margin-bottom:10px}
+.proj p{color:var(--text-dim);font-size:.92rem;margin-bottom:16px;flex:1}
+.proj-stack{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.tag{font-family:var(--mono);font-size:11px;color:var(--text-dim);background:var(--bg-inset);border:1px solid var(--line);border-radius:5px;padding:3px 8px}
+.proj-links{display:flex;gap:14px;font-family:var(--mono);font-size:12.5px}
+.proj-links a{color:var(--accent);display:inline-flex;align-items:center;gap:5px;transition:opacity .15s}
+.proj-links a:hover{opacity:.7}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.skill-col h4{font-family:var(--mono);font-size:13px;color:var(--accent);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.skill-col ul{list-style:none}
+.skill-col li{color:var(--text-dim);font-size:.92rem;padding:5px 0;display:flex;justify-content:space-between}
+.skill-col li span{font-family:var(--mono);font-size:11px;color:var(--text-faint)}
+
+/* RESEARCH */
+.pub{border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin-bottom:14px;background:var(--bg-raised);display:flex;justify-content:space-between;gap:20px;align-items:center;flex-wrap:wrap}
+.pub-t{font-family:var(--display);font-weight:600;font-size:1.02rem;margin-bottom:4px;max-width:60ch}
+.pub-m{font-family:var(--mono);font-size:12px;color:var(--text-faint)}
+.pub .status{font-family:var(--mono);font-size:11.5px;padding:4px 10px;border-radius:20px;white-space:nowrap}
+.status.pub-done{color:var(--accent);border:1px solid var(--accent-dim)}
+.status.pub-review{color:var(--accent-warm);border:1px solid #6b5a1f}
+
+/* PROBLEM SOLVING / LEETCODE */
+.lc-block{display:flex;justify-content:center}
+.lc-card-link{display:inline-block;border-radius:var(--radius);overflow:hidden;transition:transform .18s}
+.lc-card-link:hover{transform:translateY(-2px)}
+.lc-card{display:block;max-width:100%;height:auto;border-radius:var(--radius);border:1px solid var(--line)}
+.lc-fallback{display:none;flex-direction:column;gap:6px;align-items:center;justify-content:center;background:var(--bg-raised);border:1px solid var(--line);border-radius:var(--radius);padding:36px 48px;text-align:center}
+.lc-fallback:hover{border-color:var(--accent)}
+.lc-fallback-title{font-family:var(--display);font-weight:600;font-size:1.1rem;color:var(--text)}
+.lc-fallback-sub{font-family:var(--mono);font-size:12.5px;color:var(--text-faint)}
+
+/* CONTACT */
+.contact{text-align:center;padding:88px 0}
+.contact .sec-title{margin-bottom:16px}
+.contact p{color:var(--text-dim);max-width:44ch;margin:0 auto 32px}
+.contact-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* FOOTER */
+footer{border-top:1px solid var(--line);padding:28px 0;text-align:center}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+footer p{font-family:var(--mono);font-size:12.5px;color:var(--text-faint)}
+footer .foot-links{display:flex;gap:18px;font-family:var(--mono);font-size:12.5px}
+footer .foot-links a{color:var(--text-dim)}
+footer .foot-links a:hover{color:var(--accent)}
+
+/* RESPONSIVE */
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:40px;padding:56px 0 48px}
+  .about-grid{grid-template-columns:1fr;gap:32px}
+  .proj-grid,.skills-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .nav-links.open{display:flex;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:var(--bg-raised);border-bottom:1px solid var(--line);padding:16px 28px;gap:16px}
+  .nav-toggle{display:block}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .cursor,.blink{opacity:1}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#top" class="brand"><span class="dot"></span>srirupin.dev</a>
+    <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('navlinks').classList.toggle('open')">menu</button>
+    <div class="nav-links" id="navlinks">
+      <a href="#about">about</a>
+      <a href="#experience">experience</a>
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+      <a href="#research">research</a>
+      <a href="#problem-solving">leetcode</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap" id="top">
+
+<!-- HERO -->
+<header class="hero">
+  <div>
+    <div class="hero-eyebrow"><span class="blink"></span>Hello, I'm</div>
+    <h1>Sri Rupin<br>Potula</h1>
+    <div class="hero-role">Software Engineer <span class="sep">·</span> AI Agents &amp; Backend</div>
+    <p class="hero-blurb">I build LLM-agent systems and the backend infrastructure that runs them — from checkpoint-aware evaluation to production ML serving. MS in Computer Science, Arizona State University.</p>
+    <div class="hero-cta">
+        <a href="Sri_Rupin_Potula_resume.pdf" class="btn btn-primary" id="resumeBtn" target="_blank">↓ Download résumé</a>
+      <a href="#contact" class="btn btn-ghost">Get in touch</a>
+      <div class="hero-social">
+        <a href="https://www.linkedin.com/in/sri-rupin-potula/" aria-label="LinkedIn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.22.79 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        </a>
+        <a href="https://github.com/srirupinpotula" aria-label="GitHub" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12a12 12 0 0 0 8.21 11.39c.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.81 1.3 3.5.99.11-.78.42-1.31.76-1.61-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.11-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 6 0c2.29-1.55 3.3-1.23 3.3-1.23.65 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.8 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58A12 12 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a href="https://leetcode.com/u/SRI_RUPIN_POTULA/" aria-label="LeetCode" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.1 1.4a1.4 1.4 0 0 0-2 0l-5.6 5.7-3.2 3.2a4.9 4.9 0 0 0 0 6.9l3.2 3.2a4.9 4.9 0 0 0 6.9 0l2.7-2.7a1.4 1.4 0 1 0-2-2l-2.7 2.7a2.1 2.1 0 0 1-3 0l-3.1-3.2a2.1 2.1 0 0 1 0-3l3.2-3.1 5.6-5.7a1.4 1.4 0 0 0 0-2zM20.9 12.3H11a1.4 1.4 0 0 0 0 2.8h9.9a1.4 1.4 0 0 0 0-2.8z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIGNATURE agent trace -->
+  <div class="trace" aria-hidden="true">
+    <div class="trace-bar">
+      <span class="d d1"></span><span class="d d2"></span><span class="d d3"></span>
+      <span class="trace-title">agent-run · session.log</span>
+    </div>
+    <div class="trace-body" id="traceBody"></div>
+  </div>
+</header>
+
+<hr class="divider">
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-head">
+    <div class="sec-tag">// get to know me</div>
+    <h2 class="sec-title">About</h2>
+  </div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a software engineer focused on <strong>AI agents and backend systems</strong>. Most recently I completed my <strong>MS in Computer Science at Arizona State University</strong>, where I built an LLM-agent platform with checkpoint-aware evaluation and episodic memory.</p>
+      <p>Before grad school I worked as an SDE at <strong>Hewlett Packard Enterprise</strong>, where I parallelized a test framework and built Slack-based pre-merge CI automation — cutting feedback loops for the whole team.</p>
+      <p>I care about the parts of ML that are actually hard in production: evaluation you can trust, memory that persists, and services that stay up. I've also published research in AI cybersecurity and lung-cancer detection.</p>
+    </div>
+    <div class="about-cards">
+      <div class="info-card">
+        <div class="lbl">education</div>
+        <div class="main">M.S. Computer Science</div>
+        <div class="sub">Arizona State University</div>
+        <div class="meta">GPA 3.97</div>
+      </div>
+      <div class="info-card">
+        <div class="lbl">focus</div>
+        <div class="main">AI Agents &amp; Backend</div>
+        <div class="sub">LLM systems · evaluation · ML serving</div>
+      </div>
+      <div class="info-card">
+        <div class="lbl">location</div>
+        <div class="main">United States</div>
+        <div class="sub">Open to new-grad / early-career SWE roles</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="sec-head">
+    <div class="sec-tag">// where I've worked</div>
+    <h2 class="sec-title">Experience</h2>
+  </div>
+  <div class="timeline">
+    <div class="job">
+      <div class="job-top">
+        <div><span class="job-role">Software Engineer</span> · <span class="job-co">Hewlett Packard Enterprise</span></div>
+        <div class="job-date">SDE</div>
+      </div>
+      <ul>
+        <li>Parallelized an internal test framework, substantially reducing full-suite runtime for the team.</li>
+        <li>Built Slack-based pre-merge CI automation that surfaced build and test status before merge.</li>
+        <li>Worked on networking software for high-performance computing (HPC) systems in C++ and Python.</li>
+      </ul>
+    </div>
+    <div class="job">
+      <div class="job-top">
+        <div><span class="job-role">Graduate Research &amp; Projects</span> · <span class="job-co">Arizona State University</span></div>
+        <div class="job-date">M.S. CS</div>
+      </div>
+      <ul>
+        <li>Built memory-augmented VLM/LLM agents with retrieval and checkpoint-aware evaluation, beating VideoGameBench baselines on sparse-reward tasks.</li>
+        <li>Deployed a face-recognition framework on AWS (Lambda, SQS, Greengrass, EC2 autoscaling) at 100% accuracy and sub-second latency.</li>
+        <li>Extended the xv6 OS with secure boot, demand paging, Copy-on-Write fork(), user-level threading, and a trap-and-emulate VMM.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sec-head">
+    <div class="sec-tag">// what I've built</div>
+    <h2 class="sec-title">Projects</h2>
+  </div>
+  <div class="proj-grid">
+    <article class="proj">
+      <div class="proj-icon">◇ llm agents</div>
+      <h3>VLMs as Agents in Multimodal Benchmarks</h3>
+      <p>Memory-augmented LLM game agents using a Memento-style retrieval mechanism that beat VideoGameBench baselines across sparse-reward games (Super Mario Land, Doom II, Pokémon Crystal, Kirby's Dream Land), lifting early-stage task completion by 2.6–30% versus 0–0.9%. Built retrieval-augmented decision pipelines with checkpoint-aware memory, OCR-based state extraction, and fine-grained evaluation enabling reproducible 50–80% partial-completion analysis beyond binary success.</p>
+      <div class="proj-stack"><span class="tag">LLMs</span><span class="tag">agents</span><span class="tag">retrieval</span><span class="tag">evaluation</span><span class="tag">OCR</span></div>
+      <div class="proj-links"><a href="https://github.com/SRIRUPINPOTULA/Context-Engineering-Vision-Language-Models-to-Act-as-Agents-in-Multimodal-Benchmarks" target="_blank" rel="noopener">→ GitHub</a></div>
+    </article>
+    <article class="proj">
+      <div class="proj-icon">◇ cloud / ml serving</div>
+      <h3>AWS Face-Recognition Framework</h3>
+      <p>A Flask front end (S3 upload + SQS enqueue) with a PyTorch backend and custom EC2 autoscaling (0–15 instances) tuned for sub-second latency at 100 concurrent requests. Containerized MTCNN detection and InceptionResnetV1 recognition Lambdas to ECR, and deployed a dual-EC2 Greengrass v2 edge environment with SQS-triggered FaceNet inference — 100% accurate at under 0.8s latency.</p>
+      <div class="proj-stack"><span class="tag">AWS</span><span class="tag">Lambda</span><span class="tag">SQS</span><span class="tag">Greengrass</span><span class="tag">Docker</span><span class="tag">PyTorch</span></div>
+      <div class="proj-links"><a href="https://github.com/srirupinpotula" target="_blank" rel="noopener">→ GitHub</a></div>
+    </article>
+    <article class="proj">
+      <div class="proj-icon">◇ operating systems</div>
+      <h3>Enhancing XV6: Threading, Memory &amp; Virtualization</h3>
+      <p>Systems-level work on the xv6 teaching OS (RISC-V): built a secure bootloader with SHA-256 validation and PMP memory protection, implemented demand paging, FIFO page swapping, and Copy-on-Write fork(). Wrote ULTLib for user-level threads with round-robin, FCFS, and priority scheduling plus assembly context switching, and a trap-and-emulate virtual machine monitor for privileged instructions.</p>
+      <div class="proj-stack"><span class="tag">C</span><span class="tag">RISC-V</span><span class="tag">assembly</span><span class="tag">GDB</span><span class="tag">QEMU</span></div>
+      <div class="proj-links"><a href="https://github.com/SRIRUPINPOTULA/CSE-536-Advanced-Operating-Systems" target="_blank" rel="noopener">→ GitHub</a></div>
+    </article>
+    <article class="proj">
+      <div class="proj-icon">◇ computer vision</div>
+      <h3>Action Classification &amp; Video Retrieval</h3>
+      <p>A video action-analysis system on HMDB51: extracted deep features from pre-trained R3D-18 (Layer3/Layer4/AvgPool) alongside Bag-of-Features STIP descriptors (HoG/HoF via k-means). Built latent-semantic models with PCA, SVD, LDA, and k-means, trained k-NN and SVM label classifiers, and implemented Locality-Sensitive Hashing plus spectral clustering (from scratch) for efficient high-dimensional similarity search and retrieval.</p>
+      <div class="proj-stack"><span class="tag">Python</span><span class="tag">PyTorch</span><span class="tag">NumPy</span><span class="tag">LSH</span><span class="tag">clustering</span></div>
+      <div class="proj-links"><a href="https://github.com/SRIRUPINPOTULA/Action-Classification" target="_blank" rel="noopener">→ GitHub</a></div>
+    </article>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-head">
+    <div class="sec-tag">// what I work with</div>
+    <h2 class="sec-title">Skills</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-col">
+      <h4>languages</h4>
+      <ul>
+        <li>Python <span>expert</span></li>
+        <li>C++ / C <span>advanced</span></li>
+        <li>SQL <span>advanced</span></li>
+        <li>Java <span>proficient</span></li>
+        <li>JavaScript <span>proficient</span></li>
+      </ul>
+    </div>
+    <div class="skill-col">
+      <h4>ai / ml</h4>
+      <ul>
+        <li>LLM agents <span>advanced</span></li>
+        <li>PyTorch / TensorFlow <span>advanced</span></li>
+        <li>scikit-learn <span>advanced</span></li>
+        <li>Keras <span>proficient</span></li>
+        <li>Computer Vision <span>proficient</span></li>
+      </ul>
+    </div>
+    <div class="skill-col">
+      <h4>backend / infra</h4>
+      <ul>
+        <li>AWS <span>advanced</span></li>
+        <li>Git / GitHub <span>advanced</span></li>
+        <li>Linux <span>advanced</span></li>
+        <li>CI/CD <span>advanced</span></li>
+        <li>Docker <span>proficient</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="sec-head">
+    <div class="sec-tag">// published work</div>
+    <h2 class="sec-title">Research</h2>
+  </div>
+  <div class="pub">
+    <div>
+      <div class="pub-t">Artificial Intelligence-Based Cyber Security Applications</div>
+      <div class="pub-m">AI · cybersecurity</div>
+    </div>
+    <a class="status pub-done" href="https://link.springer.com/chapter/10.1007/978-981-99-2115-7_16" target="_blank" rel="noopener">published →</a>
+  </div>
+  <div class="pub">
+    <div>
+      <div class="pub-t">An Approach for Lung Cancer Detection using SMOTE with Convolutional Neural Network</div>
+      <div class="pub-m">CNN · medical imaging · SMOTE</div>
+    </div>
+    <a class="status pub-done" href="https://cspub-ijcisim.org/index.php/ijcisim/article/view/1254" target="_blank" rel="noopener">published →</a>
+  </div>
+</section>
+
+</div>
+
+<!-- PROBLEM SOLVING -->
+<div class="wrap">
+<hr class="divider">
+<section id="problem-solving">
+  <div class="sec-head">
+    <div class="sec-tag">// problem solving</div>
+    <h2 class="sec-title">LeetCode</h2>
+  </div>
+  <div class="lc-block">
+    <a href="https://leetcode.com/u/SRI_RUPIN_POTULA/" target="_blank" rel="noopener" class="lc-card-link" aria-label="View my LeetCode profile">
+      <img
+        src="https://leetcard.jacoblin.cool/SRI_RUPIN_POTULA?theme=dark&font=JetBrains%20Mono&ext=heatmap"
+        alt="Sri Rupin Potula — LeetCode stats"
+        class="lc-card"
+        loading="lazy"
+        onerror="this.style.display='none';document.getElementById('lc-fallback').style.display='flex';">
+    </a>
+    <a href="https://leetcode.com/u/SRI_RUPIN_POTULA/" target="_blank" rel="noopener" id="lc-fallback" class="lc-fallback">
+      <span class="lc-fallback-title">View my LeetCode profile →</span>
+      <span class="lc-fallback-sub">@SRI_RUPIN_POTULA · 508 solved</span>
+    </a>
+  </div>
+</section>
+</div>
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="sec-tag">// let's talk</div>
+    <h2 class="sec-title">Get in touch</h2>
+    <p>I'm open to new-grad and early-career software engineering roles. The fastest way to reach me is email.</p>
+    <div class="contact-row">
+      <a href="mailto:srirupin.potula@gmail.com" class="btn btn-primary">✉ srirupin.potula@gmail.com</a>
+      <a href="https://www.linkedin.com/in/sri-rupin-potula/" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn</a>
+      <a href="https://github.com/srirupinpotula" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
+      <a href="https://leetcode.com/u/SRI_RUPIN_POTULA/" target="_blank" rel="noopener" class="btn btn-ghost">LeetCode</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Sri Rupin Potula</p>
+    <div class="foot-links">
+      <a href="#about">about</a>
+      <a href="#projects">projects</a>
+      <a href="#research">research</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ---- Signature: type out an agent execution trace ----
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var body = document.getElementById('traceBody');
+  var lines = [
+    '<span class="c-prompt">agent&gt;</span> solve <span class="c-str">"route request through pipeline"</span>',
+    '<span class="c-dim">  ├─</span> <span class="c-tool">plan()</span> <span class="c-dim">→ 3 steps</span>',
+    '<span class="c-dim">  ├─</span> <span class="c-tool">recall</span>(<span class="c-key">episodic_memory</span>) <span class="c-ok">✓ 4 hits</span>',
+    '<span class="c-dim">  ├─</span> <span class="c-tool">exec</span>(<span class="c-key">step</span>=1) <span class="c-ok">ok</span>',
+    '<span class="c-dim">  ├─</span> <span class="c-tool">exec</span>(<span class="c-key">step</span>=2) <span class="c-ok">ok</span>',
+    '<span class="c-dim">  ├─</span> <span class="c-tool">checkpoint</span>() <span class="c-dim">→ state saved</span>',
+    '<span class="c-dim">  └─</span> <span class="c-tool">evaluate</span>() <span class="c-ok">score 0.94</span>',
+    '<span class="c-prompt">agent&gt;</span> <span class="c-ok">done</span> <span class="c-dim">in 1.8s</span> <span class="cursor"></span>'
+  ];
+  if(reduce){ body.innerHTML = lines.map(function(l){return '<div>'+l+'</div>'}).join(''); return; }
+  var i=0;
+  function next(){
+    if(i>=lines.length) return;
+    var div=document.createElement('div');
+    div.className='tl';
+    div.innerHTML=lines[i];
+    body.appendChild(div);
+    i++;
+    setTimeout(next, i===1?400:520);
+  }
+  setTimeout(next,500);
+})();
+
+</script>
+</body>
+</html>
